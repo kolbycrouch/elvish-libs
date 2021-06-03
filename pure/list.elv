@@ -10,7 +10,7 @@ fn take [n list]{
 
 # Output `$true` if `$list` contains element `$s`.
 fn contains [list s]{
-  for i $list {
+  all $list | each [i]{
     if (eq $i $s) {
       put $true
       return
@@ -21,7 +21,7 @@ fn contains [list s]{
 
 # Output `$true` if `$list` contains element with sub-string `$s`.
 fn contains-any [list s]{
-  for i $list {
+  all $list | each [i]{
     if (str:contains $i $s) {
       put $true
       return
@@ -32,7 +32,7 @@ fn contains-any [list s]{
 
 # Output `$s` if it is found in `$list`.
 fn search-list [list s]{
-  for i $list {
+  all $list | each [i]{
     if (str:contains $i $s) {
       put $i
     }
@@ -62,7 +62,7 @@ fn prepend [list a]{
 fn index-elem [list str]{
   rng = [(range 0 (count $list))]
   cnt = [0]
-  for i $list {
+  all $list | each [i]{
     if (not-eq $i $str) {
       cnt = [(all $cnt) (+ 1 $cnt[-1])]
     } else { break }

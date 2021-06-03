@@ -5,7 +5,7 @@ use ./list
 # Output new map with cli args parsed.
 fn parse [map]{
   newargs = []
-  for i $args {
+  all $args | each [i]{
     if (str:contains $i '-') {
       newargs = [(all $newargs) $i]
     } elif (str:contains $i '--') {
@@ -13,7 +13,7 @@ fn parse [map]{
     }
   }
   newmap = $map
-  for i $newargs {
+  all $newargs | each [i]{
     if (not (has-key $newmap (str:trim-left $i '-'))) {
       newmap[(str:trim-left $i '-')] = [&]
     }
