@@ -17,7 +17,7 @@ fn parse [map]{
     if (not (has-key $newmap (str:trim-left $i '-'))) {
       newmap[(str:trim-left $i '-')] = [&]
     }
-    newmap[(str:trim-left $i '-')][val] = (list:next-elem $args $i)
+    newmap[(str:trim-left $i '-')] = (list:next-elem $args $i)
   }
   put $newmap
 }
