@@ -17,7 +17,7 @@ fn parse [map]{
     if (not (has-key $newmap (str:trim-left $i '-'))) {
       newmap[(str:trim-left $i '-')] = [&]
     }
-    if (or (eq (list:next-elem $args $i) $nil) (str:has-prefix (list:next-elem $args $i))) {
+    if (or (eq (list:next-elem $args $i) $nil) (str:has-prefix '-' (list:next-elem $args $i))) {
     } else {
       newmap[(str:trim-left $i '-')] = (list:next-elem $args $i)
     }
