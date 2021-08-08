@@ -1,4 +1,5 @@
 # github.com/kolbycrouch/elvish-libs list module.
+use builtin
 use str
 
 # like `builtin:take`, except supports negative index.
