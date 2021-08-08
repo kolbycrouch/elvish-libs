@@ -41,7 +41,7 @@ fn search-list [list s]{
 
 # Output `$true` if `$list` contains index number `$i`.
 fn has-index [list i]{
-  if (< $i (count $list)) {
+  if (<= (count $list) $i) {
     put $false
     return
   }
