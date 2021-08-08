@@ -60,11 +60,11 @@ fn prepend [list a]{
 
 # Output index number of `$str` in `$list`.
 fn index-elem [list str]{
-  rng = [(range 0 (count $list))]
-  cnt = [0]
+  var rng = [(range 0 (count $list))]
+  var cnt = [0]
   all $list | each [i]{
     if (not-eq $i $str) {
-      cnt = [(all $cnt) (+ 1 $cnt[-1])]
+      set cnt = [(all $cnt) (+ 1 $cnt[-1])]
     } else { break }
   }
   put (num $cnt[-1])
@@ -72,7 +72,7 @@ fn index-elem [list str]{
 
 # Output the element that comes after `$str` in `$list`.
 fn next-elem [list str]{
-  ind = (index-elem $list $str)
+  var ind = (index-elem $list $str)
   if (< (count $list) (+ 2 $ind)) {
     put $nil
   } else { put $list[(+ 1 $ind)] }
@@ -80,7 +80,7 @@ fn next-elem [list str]{
 
 # Output the element that comes before `$str` in `$list`.
 fn prev-elem [list str]{
-  ind = (index-elem $list $str)
+  var ind = (index-elem $list $str)
   if (eq (- $ind 1) (num '-1')) {
     put $nil
   } else { put $list[(- 1 $ind)] }
