@@ -6,13 +6,13 @@ use str
 fn take [n list]{
   if (< $n 0) {
     all [(all $list)][$n':']
-  } else { builtin:take $n $@list }
+  } else { builtin:take $n $list }
 }
 
-# Output `$true` if `$list` contains element `$s`.
-fn contains [list s]{
+# Output `$true` if `$list` contains element `$e`.
+fn contains [list e]{
   all $list | each [i]{
-    if (eq $i $s) {
+    if (eq $i $e) {
       put $true
       return
     }
@@ -31,10 +31,10 @@ fn contains-any [list s]{
   put $false
 }
 
-# Output `$s` if it is found in `$list`.
-fn search-list [list s]{
+# Output `$e` if it is found in `$list`.
+fn search-list [list e]{
   all $list | each [i]{
-    if (str:contains $i $s) {
+    if (eq $i $e) {
       put $i
     }
   }
@@ -49,39 +49,39 @@ fn has-index [list i]{
   put $true
 }
 
-# Output new list with `$a` appended to `$list`.
-fn append [list a]{
-  put [(all $list) $a]
+# Output new list with `$e` appended to `$list`.
+fn append [list e]{
+  put [(all $list) $e]
 }
 
-# Output new list with `$a` prepended to `$list`.
-fn prepend [list a]{
-  put [$a (all $list)]
+# Output new list with `$e` prepended to `$list`.
+fn prepend [list e]{
+  put [$e (all $list)]
 }
 
-# Output index number of `$str` in `$list`.
-fn index-elem [list str]{
-  var rng = [(range 0 (count $list))]
-  var cnt = [0]
+# Output index number of `$e` in `$list`.
+fn index-elem [list e]{
+  rng = [(range 0 (count $list))]
+  cnt = [0]
   all $list | each [i]{
-    if (not-eq $i $str) {
-      set cnt = [(all $cnt) (+ 1 $cnt[-1])]
+    if (not-eq $i $e) {
+      cnt = [(all $cnt) (+ 1 $cnt[-1])]
     } else { break }
   }
   put (num $cnt[-1])
 }
 
 # Output the element that comes after `$str` in `$list`.
-fn next-elem [list str]{
-  var ind = (index-elem $list $str)
+fn next-elem [list e]{
+  ind = (index-elem $list $e)
   if (< (count $list) (+ 2 $ind)) {
     put $nil
   } else { put $list[(+ 1 $ind)] }
 }
 
 # Output the element that comes before `$str` in `$list`.
-fn prev-elem [list str]{
-  var ind = (index-elem $list $str)
+fn prev-elem [list e]{
+  ind = (index-elem $list $e)
   if (eq (- $ind 1) (num '-1')) {
     put $nil
   } else { put $list[(- 1 $ind)] }

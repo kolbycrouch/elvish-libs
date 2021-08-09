@@ -4,15 +4,15 @@ use ./list
 
 # Output new map with cli args parsed.
 fn parse [map]{
-  var newargs = []
+  newargs = []
   all $args | each [i]{
     if (str:contains $i '-') {
-      set newargs = [(all $newargs) $i]
+      newargs = [(all $newargs) $i]
     } elif (str:contains $i '--') {
-      set newargs = [(all $newargs) $i]
+      newargs = [(all $newargs) $i]
     }
   }
-  var newmap = $map
+  newmap = $map
   all $newargs | each [i]{
     if (not (has-key $newmap (str:trim-left $i '-'))) {
       newmap[(str:trim-left $i '-')] = [&]
