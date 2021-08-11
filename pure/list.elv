@@ -96,3 +96,8 @@ fn after-elem [list e]{
 fn before-elem [list e]{
   put $list[..(index-elem $list $e)]
 }
+
+# Output list with element `$e` removed from `$list`.
+fn remove [list e]{
+  put [(each [x]{ if (eq $e $x) { } else { put $x}} $list)]
+}

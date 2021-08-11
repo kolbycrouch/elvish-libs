@@ -4,7 +4,7 @@ use ./type
 
 fn -check-params [f n]{
   if (not-eq (count $f[arg-names]) (num $n)) {
-    fail "callable in argument 0 must have"$n"parameter"
+    fail "callable in argument 0 must have" $n "parameters"
   }
 }
 
@@ -69,4 +69,13 @@ fn partial [f x]{
   if (type:is-list $x) {
     put [@a]{ $f $@x $@a}
   }
+}
+
+# Output a function that takes 1 parameter, and applies all functions in list `$f` to it.
+fn compose [f]{
+  -check-for-cont $f
+  
+  reduce [a b]{
+    put [x]{ $b ($a $x)}
+  } $f
 }

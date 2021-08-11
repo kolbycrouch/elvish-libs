@@ -53,4 +53,8 @@ use ./list
     (test:is { list:before-elem [foo bar baz] baz } [foo bar])
     (test:is { list:before-elem [foo bar baz] foo } [])
   ])
+  (test:set remove [
+    (test:is { list:remove [1 2 3 4] 3 } [1 2 4])
+    (test:is { list:remove [[1 2] [3 4]] [1 2] } [[3 4]])
+  ])
 ])
