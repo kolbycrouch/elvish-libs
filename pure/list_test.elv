@@ -1,7 +1,7 @@
 use ../contrib/test
 use ./list
 
-(test:set github.com/kolbycrouch/elvish-libs/pure/list [
+(test:set list [
   (test:set take [
     (test:is { put [(list:take 2 [1 2 3 4])] } [1 2])
     (test:is { put [(list:take -2 [1 2 3 4])] } [3 4])
@@ -44,5 +44,13 @@ use ./list
   (test:set prev-elem [
     (test:is { list:prev-elem [foo bar baz] bar } foo)
     (test:is { list:prev-elem [foo bar baz] foo } $nil)
+  ])
+  (test:set after-elem [
+    (test:is { list:after-elem [foo bar baz] foo } [bar baz])
+    (test:is { list:after-elem [foo bar baz] baz } [])
+  ])
+  (test:set before-elem [
+    (test:is { list:before-elem [foo bar baz] baz } [foo bar])
+    (test:is { list:before-elem [foo bar baz] foo } [])
   ])
 ])

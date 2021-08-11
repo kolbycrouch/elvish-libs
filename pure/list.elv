@@ -71,7 +71,7 @@ fn index-elem [list e]{
   put (num $cnt[-1])
 }
 
-# Output the element that comes after `$str` in `$list`.
+# Output the element that comes after `$e` in `$list`.
 fn next-elem [list e]{
   ind = (index-elem $list $e)
   if (< (count $list) (+ 2 $ind)) {
@@ -79,10 +79,20 @@ fn next-elem [list e]{
   } else { put $list[(+ 1 $ind)] }
 }
 
-# Output the element that comes before `$str` in `$list`.
+# Output the element that comes before `$e` in `$list`.
 fn prev-elem [list e]{
   ind = (index-elem $list $e)
   if (eq (- $ind 1) (num '-1')) {
     put $nil
   } else { put $list[(- 1 $ind)] }
+}
+
+# Output list of all elements after `$e` in `$list`.
+fn after-elem [list e]{
+  put $list[(+ 1 (index-elem $list $e))..]
+}
+
+# Output list of all elements before `$e` in `$list`.
+fn before-elem [list e]{
+  put $list[..(index-elem $list $e)]
 }
