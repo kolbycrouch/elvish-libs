@@ -24,7 +24,7 @@ fn instance {|&inherit=$nil obj|
 	}
 	
 	all [(keys $ob)] | each {|x|
-    if (eq (kind-of $ob[$x]) "fn") {
+		if (eq (kind-of $ob[$x]) "fn") {
 			cls = [(all $cls) (put $x "=" $obj[$x][def]";")]
 		} else {
 			els[$x] = $ob[$x]
