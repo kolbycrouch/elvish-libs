@@ -3,15 +3,15 @@ use builtin
 use str
 
 # like `builtin:take`, except supports negative index.
-fn take [n list]{
+fn take {|n list|
   if (< $n 0) {
-    all [(all $list)][$n':']
+    all [(all $list)][$n..]
   } else { builtin:take $n $list }
 }
 
 # Output `$true` if `$list` contains element `$e`.
-fn contains [list e]{
-  all $list | each [i]{
+fn contains {|list e|
+  all $list | each {|i|
     if (eq $i $e) {
       put $true
       return
@@ -21,8 +21,8 @@ fn contains [list e]{
 }
 
 # Output `$true` if `$list` contains element with sub-string `$s`.
-fn contains-any [list s]{
-  all $list | each [i]{
+fn contains-any {|list s|
+  all $list | each {|i|
     if (str:contains $i $s) {
       put $true
       return
@@ -32,8 +32,8 @@ fn contains-any [list s]{
 }
 
 # Output `$e` if it is found in `$list`.
-fn search-list [list e]{
-  all $list | each [i]{
+fn search-list {|list e|
+  all $list | each {|i|
     if (eq $i $e) {
       put $i
     }
@@ -41,7 +41,7 @@ fn search-list [list e]{
 }
 
 # Output `$true` if `$list` contains index number `$i`.
-fn has-index [list i]{
+fn has-index {|list i|
   if (<= (count $list) $i) {
     put $false
     return
@@ -50,20 +50,20 @@ fn has-index [list i]{
 }
 
 # Output new list with `$e` appended to `$list`.
-fn append [list e]{
+fn append {|list e|
   put [(all $list) $e]
 }
 
 # Output new list with `$e` prepended to `$list`.
-fn prepend [list e]{
+fn prepend {|list e|
   put [$e (all $list)]
 }
 
 # Output index number of `$e` in `$list`.
-fn index-elem [list e]{
+fn index-elem {|list e|
   rng = [(range 0 (count $list))]
   cnt = [0]
-  all $list | each [i]{
+  all $list | each {|i|
     if (not-eq $i $e) {
       cnt = [(all $cnt) (+ 1 $cnt[-1])]
     } else { break }
@@ -72,7 +72,7 @@ fn index-elem [list e]{
 }
 
 # Output the element that comes after `$e` in `$list`.
-fn next-elem [list e]{
+fn next-elem {|list e|
   ind = (index-elem $list $e)
   if (< (count $list) (+ 2 $ind)) {
     put $nil
@@ -80,7 +80,7 @@ fn next-elem [list e]{
 }
 
 # Output the element that comes before `$e` in `$list`.
-fn prev-elem [list e]{
+fn prev-elem {|list e|
   ind = (index-elem $list $e)
   if (eq (- $ind 1) (num '-1')) {
     put $nil
@@ -88,16 +88,16 @@ fn prev-elem [list e]{
 }
 
 # Output list of all elements after `$e` in `$list`.
-fn after-elem [list e]{
+fn after-elem {|list e|
   put $list[(+ 1 (index-elem $list $e))..]
 }
 
 # Output list of all elements before `$e` in `$list`.
-fn before-elem [list e]{
+fn before-elem {|list e|
   put $list[..(index-elem $list $e)]
 }
 
 # Output list with element `$e` removed from `$list`.
-fn remove [list e]{
-  put [(each [x]{ if (eq $e $x) { } else { put $x}} $list)]
+fn remove {|list e|
+  put [(each {|x| if (eq $e $x) { } else { put $x}} $list)]
 }

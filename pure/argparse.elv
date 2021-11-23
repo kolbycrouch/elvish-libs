@@ -3,9 +3,9 @@ use str
 use ./list
 
 # Output new map with cli args parsed.
-fn parse [map]{
+fn parse {|map|
   newargs = []
-  all $args | each [i]{
+  all $args | each {|i|
     if (str:contains $i '-') {
       newargs = [(all $newargs) $i]
     } elif (str:contains $i '--') {
@@ -13,7 +13,7 @@ fn parse [map]{
     }
   }
   newmap = $map
-  all $newargs | each [i]{
+  all $newargs | each {|i|
     if (not (has-key $newmap (str:trim-left $i '-'))) {
       newmap[(str:trim-left $i '-')] = [&]
     }
