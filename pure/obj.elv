@@ -16,7 +16,7 @@ use ./map
 
 fn instance {|&inherit=$nil obj|
 	cls = []
-  els = [&]
+	els = [&]
 
 	ob = $obj
 	if (eq (kind-of $inherit) "map") {
@@ -31,7 +31,7 @@ fn instance {|&inherit=$nil obj|
 		}
 	}
 
-  ns = $nil
+	ns = $nil
 
 	eval &ns=(ns $els) &on-end={|n| ns = $n} (str:join " " $cls)
 
