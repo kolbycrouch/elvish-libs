@@ -61,19 +61,18 @@ fn prepend {|list e|
 
 # Output index number of `$e` in `$list`.
 fn index-elem {|list e|
-  rng = [(range 0 (count $list))]
-  cnt = [0]
+  var cnt = 0
   all $list | each {|i|
     if (not-eq $i $e) {
-      cnt = [(all $cnt) (+ 1 $cnt[-1])]
+      set cnt = (+ 1 $cnt)
     } else { break }
   }
-  put (num $cnt[-1])
+  put $cnt
 }
 
 # Output the element that comes after `$e` in `$list`.
 fn next-elem {|list e|
-  ind = (index-elem $list $e)
+  var ind = (index-elem $list $e)
   if (< (count $list) (+ 2 $ind)) {
     put $nil
   } else { put $list[(+ 1 $ind)] }
@@ -81,7 +80,7 @@ fn next-elem {|list e|
 
 # Output the element that comes before `$e` in `$list`.
 fn prev-elem {|list e|
-  ind = (index-elem $list $e)
+  var ind = (index-elem $list $e)
   if (eq (- $ind 1) (num '-1')) {
     put $nil
   } else { put $list[(- 1 $ind)] }
@@ -100,4 +99,18 @@ fn before-elem {|list e|
 # Output list with element `$e` removed from `$list`.
 fn remove {|list e|
   put [(each {|x| if (eq $e $x) { } else { put $x}} $list)]
+}
+
+# Output list where all elements of type `list` in `$l` have been flattened.
+fn flatten {|l|
+  var nl = []
+  all $l | each {|x|
+    if (eq (kind-of $x) "list") {
+      var nnl = [(all $x | each {|y| all (flatten $y)})]
+      set nl = [(all $nl) (all $nnl)]
+    } else {
+      set nl = [(all $nl) $x]
+    }
+  }
+  put $nl
 }

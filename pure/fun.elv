@@ -30,13 +30,13 @@ fn filter {|f x|
 # Output a cumulative value gathered from reducing a container `$x` with `$f`.
 # Works on the map type by accumulating the value of each key.
 fn reduce {|f x|
-  vals = (if (type:is-map $x) { map:vals $x} else { put $x})
-  fin = $nil
+  var vals = (if (type:is-map $x) { map:vals $x} else { put $x})
+  var fin = $nil
   all $vals |
     each {|e|
-      if (eq $fin $nil) { fin = $e}
+      if (eq $fin $nil) { set fin = $e}
       if (not-eq (list:next-elem $vals $e) $nil) {
-        fin = ($f $fin (list:next-elem $vals $e))
+        set fin = ($f $fin (list:next-elem $vals $e))
       }}
   put $fin
 }
@@ -57,13 +57,13 @@ fn compose {|f|
 
 # Output a function that wraps `$f` with a cache of previous outputs from calling `$f`.
 fn memoize {|f|
-  cache = [&]
+  var cache = [&]
   put {|@args|
     if (has-key $cache $args) {
       all $cache[$args]
     } else {
-      @res = ($f $@args)
-      cache = (assoc $cache $args $res)
+      var @res = ($f $@args)
+      set cache = (assoc $cache $args $res)
       put $@res
     }
   }

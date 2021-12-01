@@ -15,25 +15,25 @@ use ./map
 # implemented.
 
 fn instance {|&inherit=$nil obj|
-	cls = []
-	els = [&]
+	var cls = []
+	var els = [&]
 
-	ob = $obj
+	var ob = $obj
 	if (eq (kind-of $inherit) "map") {
-		ob = (map:merge $inherit $obj)
+		set ob = (map:merge $inherit $obj)
 	}
 	
 	all [(keys $ob)] | each {|x|
 		if (eq (kind-of $ob[$x]) "fn") {
-			cls = [(all $cls) (put $x "=" $obj[$x][def]";")]
+			set cls = [(all $cls) (put $x "=" $obj[$x][def]";")]
 		} else {
-			els[$x] = $ob[$x]
+			set els[$x] = $ob[$x]
 		}
 	}
 
-	ns = $nil
+	var ns = $nil
 
-	eval &ns=(ns $els) &on-end={|n| ns = $n} (str:join " " $cls)
+	eval &ns=(ns $els) &on-end={|n| set ns = $n} (str:join " " $cls)
 
 	put $ns
 }

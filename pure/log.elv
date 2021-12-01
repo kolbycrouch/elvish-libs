@@ -2,7 +2,7 @@ use ./list
 use ./util
 
 # Precedence of log levels.
-precedence = [
+var precedence = [
   debug
   info
   warning
