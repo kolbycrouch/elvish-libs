@@ -5,13 +5,13 @@ use str
 # like `builtin:take`, except supports negative index.
 fn take {|n list|
   if (< $n 0) {
-    all [(all $list)][$n..]
+    all $list[$n..]
   } else { builtin:take $n $list }
 }
 
 # Output `$true` if `$list` contains element `$e`.
 fn contains {|list e|
-  all $list | each {|i|
+  for i $list {
     if (eq $i $e) {
       put $true
       return
@@ -22,7 +22,7 @@ fn contains {|list e|
 
 # Output `$true` if `$list` contains element with sub-string `$s`.
 fn contains-any {|list s|
-  all $list | each {|i|
+  for i $list {
     if (str:contains $i $s) {
       put $true
       return
@@ -33,7 +33,7 @@ fn contains-any {|list s|
 
 # Output `$e` if it is found in `$list`.
 fn search-list {|list e|
-  all $list | each {|i|
+  for i $list {
     if (eq $i $e) {
       put $i
     }
@@ -62,7 +62,7 @@ fn prepend {|list e|
 # Output index number of `$e` in `$list`.
 fn index-elem {|list e|
   var cnt = 0
-  all $list | each {|i|
+  for i $list {
     if (not-eq $i $e) {
       set cnt = (+ 1 $cnt)
     } else { break }
@@ -98,15 +98,15 @@ fn before-elem {|list e|
 
 # Output list with element `$e` removed from `$list`.
 fn remove {|list e|
-  put [(each {|x| if (eq $e $x) { } else { put $x}} $list)]
+  put [(for x $list { if (eq $e $x) { } else { put $x}})]
 }
 
 # Output list where all elements of type `list` in `$l` have been flattened.
 fn flatten {|l|
   var nl = []
-  all $l | each {|x|
+  for x $l {
     if (eq (kind-of $x) "list") {
-      var nnl = [(all $x | each {|y| all (flatten $y)})]
+      var nnl = [(for y $x { all (flatten $y)})]
       set nl = [(all $nl) (all $nnl)]
     } else {
       set nl = [(all $nl) $x]
