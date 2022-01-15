@@ -62,9 +62,8 @@ fn memoize {|f|
     if (has-key $cache $args) {
       all $cache[$args]
     } else {
-      var @res = ($f $@args)
-      set cache = (assoc $cache $args $res)
-      put $@res
+      set cache[$args] = [($f $@args)]
+      all $cache[$args]
     }
   }
 }

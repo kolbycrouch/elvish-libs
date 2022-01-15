@@ -7,10 +7,10 @@ fn vals {|x|
 # Output a map where all key/values of maps `$m` are merged.
 fn merge {|@m|
 	var nm = [&]
-	all $m | each {|x|
-		all [(keys $x)] | each {|y|
+	each {|x|
+		each {|y|
 			set nm[$y] = $x[$y]
-		}
-	}
+		} [(keys $x)]
+	} $m
 	put $nm
 }

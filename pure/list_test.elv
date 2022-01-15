@@ -57,6 +57,10 @@ use ./list
     (test:is { list:remove [1 2 3 4] 3 } [1 2 4])
     (test:is { list:remove [[1 2] [3 4]] [1 2] } [[3 4]])
   ])
+  (test:set merge [
+    (test:is { list:merge [1 2] [3 4] } [1 2 3 4])
+    (test:is { list:merge [1 2] [3 4] [5 6]} [1 2 3 4 5 6])
+  ])
   (test:set flatten [
     (test:is { list:flatten [1 [2] [[3]] [[[4]]]]} [1 2 3 4])
   ])

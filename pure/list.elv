@@ -101,6 +101,17 @@ fn remove {|list e|
   put [(for x $list { if (eq $e $x) { } else { put $x}})]
 }
 
+# Output a list where all elements of lists `$@l` have been merged.
+fn merge {|@l|
+  var nl = []
+  each {|x|
+    each {|y|
+      set nl = [(all $nl) $y]
+    } $x
+  } $l
+  put $nl
+}
+
 # Output list where all elements of type `list` in `$l` have been flattened.
 fn flatten {|l|
   var nl = []
